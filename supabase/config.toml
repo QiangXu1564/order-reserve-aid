@@ -72,3 +72,6 @@ verify_jwt = false
 
 [functions.leaping-ai-proxy]
 verify_jwt = false
+
+[functions.orders]
+verify_jwt = false

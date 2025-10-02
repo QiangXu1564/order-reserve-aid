@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { LogOut, ChefHat } from "lucide-react";
 import OrdersList from "@/components/OrdersList";
 import ReservationsList from "@/components/ReservationsList";
+import ReservationApprovals from "@/components/ReservationApprovals";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
@@ -80,7 +81,7 @@ const Dashboard = () => {
 
       <main className="container mx-auto px-4 py-10">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full max-w-lg mx-auto grid-cols-2 mb-10 h-14 p-1.5 bg-muted/50 backdrop-blur-sm shadow-soft">
+          <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-3 mb-10 h-14 p-1.5 bg-muted/50 backdrop-blur-sm shadow-soft">
             <TabsTrigger 
               value="orders" 
               className="text-base font-semibold data-[state=active]:bg-gradient-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-medium transition-all duration-300 rounded-lg"
@@ -93,6 +94,12 @@ const Dashboard = () => {
             >
               🍽️ Reservations
             </TabsTrigger>
+            <TabsTrigger 
+              value="approvals" 
+              className="text-base font-semibold data-[state=active]:bg-gradient-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-medium transition-all duration-300 rounded-lg"
+            >
+              ✅ Approvals
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="orders" className="mt-0 animate-in fade-in-50 duration-300">
@@ -101,6 +108,10 @@ const Dashboard = () => {
 
           <TabsContent value="reservations" className="mt-0 animate-in fade-in-50 duration-300">
             <ReservationsList />
+          </TabsContent>
+
+          <TabsContent value="approvals" className="mt-0 animate-in fade-in-50 duration-300">
+            <ReservationApprovals />
           </TabsContent>
         </Tabs>
       </main>

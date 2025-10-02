@@ -60,3 +60,9 @@ verify_jwt = false
 
 [functions.check-reservation-availability]
 verify_jwt = false
+
+[functions.request-reservation-approval]
+verify_jwt = false
+
+[functions.check-approval-status]
+verify_jwt = false

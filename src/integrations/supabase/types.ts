@@ -44,6 +44,51 @@ export type Database = {
         }
         Relationships: []
       }
+      reservation_approvals: {
+        Row: {
+          conversation_id: string | null
+          created_at: string
+          customer_name: string
+          customer_phone: string
+          id: string
+          number_of_people: number
+          reservation_date: string
+          reservation_time: string
+          responded_at: string | null
+          status: string
+          updated_at: string
+          worker_notes: string | null
+        }
+        Insert: {
+          conversation_id?: string | null
+          created_at?: string
+          customer_name: string
+          customer_phone: string
+          id?: string
+          number_of_people: number
+          reservation_date: string
+          reservation_time: string
+          responded_at?: string | null
+          status?: string
+          updated_at?: string
+          worker_notes?: string | null
+        }
+        Update: {
+          conversation_id?: string | null
+          created_at?: string
+          customer_name?: string
+          customer_phone?: string
+          id?: string
+          number_of_people?: number
+          reservation_date?: string
+          reservation_time?: string
+          responded_at?: string | null
+          status?: string
+          updated_at?: string
+          worker_notes?: string | null
+        }
+        Relationships: []
+      }
       reservations: {
         Row: {
           created_at: string

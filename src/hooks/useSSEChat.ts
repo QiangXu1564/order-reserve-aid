@@ -1,10 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ChatMessage, SSEMessage } from "@/types";
 
-// NOTA: Reemplazar estos valores con los reales de tu configuración de Leaping AI
-const LEAPING_API_URL = "https://api.leaping.ai/v1/chat/snapshot";
-const AGENT_SNAPSHOT_ID = "your_agent_snapshot_id"; // Reemplazar con tu ID real
-const BEARER_TOKEN = "your_bearer_token"; // Reemplazar con tu token real
+const PROXY_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/leaping-ai-proxy`;
 
 export const useSSEChat = (reservationId: string) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -12,24 +9,16 @@ export const useSSEChat = (reservationId: string) => {
   const eventSourceRef = useRef<EventSource | null>(null);
 
   useEffect(() => {
-    // Conectar al SSE de Leaping AI
-    const endUserId = `reservation_${reservationId}`;
-    const url = `${LEAPING_API_URL}/${AGENT_SNAPSHOT_ID}?end_user_id=${endUserId}`;
-
-    console.log("Conectando a SSE:", url);
-
-    // EventSource no soporta headers personalizados, así que necesitamos usar fetch con ReadableStream
     const connectSSE = async () => {
       try {
-        const response = await fetch(url, {
+        const response = await fetch(PROXY_URL, {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${BEARER_TOKEN}`,
-            Accept: "text/event-stream",
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            // Incluir cualquier dato inicial necesario
+            reservationId,
+            action: "connect"
           }),
         });
 
@@ -99,17 +88,14 @@ export const useSSEChat = (reservationId: string) => {
 
   const sendMessage = async (content: string): Promise<boolean> => {
     try {
-      const endUserId = `reservation_${reservationId}`;
-      const url = `${LEAPING_API_URL}/${AGENT_SNAPSHOT_ID}?end_user_id=${endUserId}`;
-
-      const response = await fetch(url, {
+      const response = await fetch(PROXY_URL, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${BEARER_TOKEN}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          type: "user_message",
+          reservationId,
+          action: "send",
           content,
         }),
       });

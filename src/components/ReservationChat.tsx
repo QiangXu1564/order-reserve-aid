@@ -35,7 +35,7 @@ const ReservationChat = ({ reservation, onClose }: ReservationChatProps) => {
     } else {
       toast({
         title: "Error",
-        description: "No se pudo enviar el mensaje",
+        description: "Could not send message",
         variant: "destructive",
       });
     }
@@ -56,7 +56,7 @@ const ReservationChat = ({ reservation, onClose }: ReservationChatProps) => {
             <div>
               <CardTitle className="text-xl">Chat - {reservation.id}</CardTitle>
               <p className="text-sm text-muted-foreground mt-1">
-                {reservation.customer} - {reservation.numberOfPeople} personas
+                {reservation.customer} - {reservation.numberOfPeople} people
               </p>
             </div>
             <Button variant="ghost" size="icon" onClick={onClose}>
@@ -65,7 +65,7 @@ const ReservationChat = ({ reservation, onClose }: ReservationChatProps) => {
           </div>
           {!isConnected && (
             <div className="mt-2 text-sm text-warning">
-              Conectando con el sistema...
+              Connecting to the system...
             </div>
           )}
         </CardHeader>
@@ -74,8 +74,8 @@ const ReservationChat = ({ reservation, onClose }: ReservationChatProps) => {
           {messages.length === 0 && (
             <div className="text-center text-muted-foreground py-8">
               <Bot className="w-12 h-12 mx-auto mb-2 opacity-50" />
-              <p>El chat con el bot está activo</p>
-              <p className="text-sm">Los mensajes aparecerán aquí en tiempo real</p>
+              <p>Chat with the bot is active</p>
+              <p className="text-sm">Messages will appear here in real-time</p>
             </div>
           )}
 
@@ -122,7 +122,7 @@ const ReservationChat = ({ reservation, onClose }: ReservationChatProps) => {
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Escribe tu respuesta al cliente..."
+              placeholder="Write your response to the customer..."
               disabled={!isConnected}
               className="flex-1"
             />
@@ -135,7 +135,7 @@ const ReservationChat = ({ reservation, onClose }: ReservationChatProps) => {
             </Button>
           </div>
           <p className="text-xs text-muted-foreground mt-2">
-            El bot transmitirá tu mensaje al cliente en la llamada
+            The bot will transmit your message to the customer on the call
           </p>
         </div>
       </Card>

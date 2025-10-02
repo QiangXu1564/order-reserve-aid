@@ -38,11 +38,11 @@ const Login = () => {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validación de contraseña
+    // Password validation
     if (password.length < 6) {
       toast({
-        title: "Contraseña inválida",
-        description: "La contraseña debe tener al menos 6 caracteres",
+        title: "Invalid password",
+        description: "Password must be at least 6 characters",
         variant: "destructive",
       });
       return;
@@ -50,8 +50,8 @@ const Login = () => {
 
     if (password !== confirmPassword) {
       toast({
-        title: "Las contraseñas no coinciden",
-        description: "Por favor verifica que ambas contraseñas sean iguales",
+        title: "Passwords don't match",
+        description: "Please verify that both passwords are the same",
         variant: "destructive",
       });
       return;
@@ -71,8 +71,8 @@ const Login = () => {
       if (error) throw error;
 
       toast({
-        title: "Cuenta creada",
-        description: "Has creado tu cuenta correctamente. Ya puedes iniciar sesión.",
+        title: "Account created",
+        description: "Your account has been created successfully. You can now log in.",
       });
       setIsSignup(false);
       setPassword("");
@@ -80,7 +80,7 @@ const Login = () => {
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message || "No se pudo crear la cuenta",
+        description: error.message || "Could not create account",
         variant: "destructive",
       });
     } finally {
@@ -101,13 +101,13 @@ const Login = () => {
       if (error) throw error;
 
       toast({
-        title: "Bienvenido",
-        description: "Has iniciado sesión correctamente",
+        title: "Welcome",
+        description: "You have successfully logged in",
       });
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message || "Credenciales incorrectas",
+        description: error.message || "Incorrect credentials",
         variant: "destructive",
       });
     } finally {
@@ -126,14 +126,14 @@ const Login = () => {
           </div>
           <CardTitle className="text-2xl font-bold">Restaurant ManagAIment</CardTitle>
           <CardDescription>
-            Gestiona pedidos y reservas de tu restaurante
+            Manage your restaurant orders and reservations
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs value={isSignup ? "signup" : "login"} onValueChange={(v) => setIsSignup(v === "signup")} className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-4">
-              <TabsTrigger value="login">Iniciar Sesión</TabsTrigger>
-              <TabsTrigger value="signup">Registrarse</TabsTrigger>
+              <TabsTrigger value="login">Log In</TabsTrigger>
+              <TabsTrigger value="signup">Sign Up</TabsTrigger>
             </TabsList>
             
             <TabsContent value="login">
@@ -143,14 +143,14 @@ const Login = () => {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="tu@email.com"
+                    placeholder="you@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="password">Contraseña</Label>
+                  <Label htmlFor="password">Password</Label>
                   <Input
                     id="password"
                     type="password"
@@ -165,7 +165,7 @@ const Login = () => {
                   className="w-full bg-gradient-primary hover:opacity-90 transition-smooth"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Ingresando..." : "Iniciar Sesión"}
+                  {isLoading ? "Logging in..." : "Log In"}
                 </Button>
               </form>
             </TabsContent>
@@ -177,14 +177,14 @@ const Login = () => {
                   <Input
                     id="signup-email"
                     type="email"
-                    placeholder="tu@email.com"
+                    placeholder="you@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-password">Contraseña</Label>
+                  <Label htmlFor="signup-password">Password</Label>
                   <Input
                     id="signup-password"
                     type="password"
@@ -195,11 +195,11 @@ const Login = () => {
                     minLength={6}
                   />
                   <p className="text-xs text-muted-foreground">
-                    Mínimo 6 caracteres
+                    Minimum 6 characters
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="confirm-password">Confirmar Contraseña</Label>
+                  <Label htmlFor="confirm-password">Confirm Password</Label>
                   <Input
                     id="confirm-password"
                     type="password"
@@ -215,7 +215,7 @@ const Login = () => {
                   className="w-full bg-gradient-primary hover:opacity-90 transition-smooth"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Creando cuenta..." : "Crear Cuenta"}
+                  {isLoading ? "Creating account..." : "Create Account"}
                 </Button>
               </form>
             </TabsContent>

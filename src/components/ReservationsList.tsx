@@ -35,8 +35,8 @@ const ReservationsList = () => {
         },
         (payload) => {
           toast({
-            title: "🔔 Nueva reserva",
-            description: `Reserva de ${payload.new.customer_name}`,
+            title: "🔔 New reservation",
+            description: `Reservation from ${payload.new.customer_name}`,
           });
           setReservations(prev => [payload.new as Reservation, ...prev]);
         }
@@ -76,7 +76,7 @@ const ReservationsList = () => {
     if (error) {
       toast({
         title: "Error",
-        description: "No se pudieron cargar las reservas",
+        description: "Could not load reservations",
         variant: "destructive",
       });
     } else if (data) {
@@ -97,23 +97,23 @@ const ReservationsList = () => {
     if (error) {
       toast({
         title: "Error",
-        description: "No se pudo actualizar la reserva",
+        description: "Could not update reservation",
         variant: "destructive",
       });
     } else {
       toast({
-        title: "Reserva actualizada",
-        description: `Estado cambiado a ${getStatusLabel(newStatus)}`,
+        title: "Reservation updated",
+        description: `Status changed to ${getStatusLabel(newStatus)}`,
       });
     }
   };
 
   const getStatusLabel = (status: Reservation['status']) => {
     const labels = {
-      pending: "Pendiente",
-      confirmed: "Confirmada",
-      rejected: "Rechazada",
-      completed: "Completada",
+      pending: "Pending",
+      confirmed: "Confirmed",
+      rejected: "Rejected",
+      completed: "Completed",
     };
     return labels[status];
   };
@@ -145,9 +145,9 @@ const ReservationsList = () => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-foreground">Reservas</h2>
+        <h2 className="text-2xl font-bold text-foreground">Reservations</h2>
         <Badge variant="secondary" className="text-sm">
-          {reservations.length} reservas
+          {reservations.length} reservations
         </Badge>
       </div>
 
@@ -171,7 +171,7 @@ const ReservationsList = () => {
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Users className="w-4 h-4" />
-                <span className="text-sm">{reservation.number_of_people} personas</span>
+                <span className="text-sm">{reservation.number_of_people} people</span>
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Calendar className="w-4 h-4" />
@@ -185,7 +185,7 @@ const ReservationsList = () => {
                     onClick={() => updateReservationStatus(reservation.id, 'confirmed')}
                     className="flex-1"
                   >
-                    Aceptar
+                    Accept
                   </Button>
                   <Button
                     size="sm"
@@ -193,7 +193,7 @@ const ReservationsList = () => {
                     onClick={() => updateReservationStatus(reservation.id, 'rejected')}
                     className="flex-1"
                   >
-                    Rechazar
+                    Reject
                   </Button>
                 </div>
               )}
@@ -205,7 +205,7 @@ const ReservationsList = () => {
                   className="w-full"
                   variant="secondary"
                 >
-                  Marcar como Completada
+                  Mark as Completed
                 </Button>
               )}
             </CardContent>
@@ -215,7 +215,7 @@ const ReservationsList = () => {
 
       {reservations.length === 0 && (
         <div className="text-center py-12 text-muted-foreground">
-          <p>No hay reservas activas en este momento</p>
+          <p>No active reservations at the moment</p>
         </div>
       )}
     </div>

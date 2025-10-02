@@ -34,8 +34,8 @@ const OrdersList = () => {
         },
         (payload) => {
           toast({
-            title: "🔔 Nuevo pedido",
-            description: `Pedido de ${payload.new.customer_name}`,
+            title: "🔔 New order",
+            description: `Order from ${payload.new.customer_name}`,
           });
           setOrders(prev => [payload.new as Order, ...prev]);
         }
@@ -75,7 +75,7 @@ const OrdersList = () => {
     if (error) {
       toast({
         title: "Error",
-        description: "No se pudieron cargar los pedidos",
+        description: "Could not load orders",
         variant: "destructive",
       });
     } else if (data) {
@@ -96,23 +96,23 @@ const OrdersList = () => {
     if (error) {
       toast({
         title: "Error",
-        description: "No se pudo actualizar el pedido",
+        description: "Could not update order",
         variant: "destructive",
       });
     } else {
       toast({
-        title: "Pedido actualizado",
-        description: `Estado cambiado a ${getStatusLabel(newStatus)}`,
+        title: "Order updated",
+        description: `Status changed to ${getStatusLabel(newStatus)}`,
       });
     }
   };
 
   const getStatusLabel = (status: Order['status']) => {
     const labels = {
-      pending: "Pendiente",
-      preparing: "Preparando",
-      ready: "Listo",
-      delivered: "Entregado",
+      pending: "Pending",
+      preparing: "Preparing",
+      ready: "Ready",
+      delivered: "Delivered",
     };
     return labels[status];
   };
@@ -152,9 +152,9 @@ const OrdersList = () => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-foreground">Pedidos Activos</h2>
+        <h2 className="text-2xl font-bold text-foreground">Active Orders</h2>
         <Badge variant="secondary" className="text-sm">
-          {orders.length} pedidos
+          {orders.length} orders
         </Badge>
       </div>
 
@@ -183,11 +183,11 @@ const OrdersList = () => {
                   <span className="text-sm">{formatTime(order.created_at)}</span>
                 </div>
                 <div className="pt-2 border-t border-border">
-                  <p className="text-sm font-medium mb-2 text-foreground">Productos:</p>
+                  <p className="text-sm font-medium mb-2 text-foreground">Products:</p>
                   <ul className="space-y-1">
                     {Array.isArray(products) && products.map((product: any, index: number) => (
                       <li key={index} className="text-sm text-muted-foreground pl-2 border-l-2 border-primary">
-                        {typeof product === 'string' ? product : product.name || 'Producto'}
+                        {typeof product === 'string' ? product : product.name || 'Product'}
                       </li>
                     ))}
                   </ul>
@@ -200,7 +200,7 @@ const OrdersList = () => {
                       onClick={() => updateOrderStatus(order.id, 'preparing')}
                       className="flex-1"
                     >
-                      Preparar
+                      Prepare
                     </Button>
                     <Button
                       size="sm"
@@ -208,7 +208,7 @@ const OrdersList = () => {
                       onClick={() => updateOrderStatus(order.id, 'delivered')}
                       className="flex-1"
                     >
-                      Cancelar
+                      Cancel
                     </Button>
                   </div>
                 )}
@@ -219,7 +219,7 @@ const OrdersList = () => {
                     onClick={() => updateOrderStatus(order.id, 'ready')}
                     className="w-full"
                   >
-                    Marcar como Listo
+                    Mark as Ready
                   </Button>
                 )}
 
@@ -230,7 +230,7 @@ const OrdersList = () => {
                     className="w-full"
                     variant="secondary"
                   >
-                    Marcar como Entregado
+                    Mark as Delivered
                   </Button>
                 )}
               </CardContent>
@@ -241,7 +241,7 @@ const OrdersList = () => {
 
       {orders.length === 0 && (
         <div className="text-center py-12 text-muted-foreground">
-          <p>No hay pedidos activos en este momento</p>
+          <p>No active orders at the moment</p>
         </div>
       )}
     </div>

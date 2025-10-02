@@ -39,8 +39,8 @@ const Dashboard = () => {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     toast({
-      title: "Sesión cerrada",
-      description: "Has cerrado sesión correctamente",
+      title: "Logged out",
+      description: "You have successfully logged out",
     });
     navigate("/");
   };
@@ -59,10 +59,10 @@ const Dashboard = () => {
               </div>
               <div>
                 <h1 className="text-3xl font-bold text-foreground tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
-                  Panel de Control
+                  Dashboard
                 </h1>
                 <p className="text-sm text-muted-foreground mt-0.5 font-medium">
-                  Gestión de pedidos y reservas en tiempo real
+                  Real-time orders and reservations management
                 </p>
               </div>
             </div>
@@ -72,7 +72,7 @@ const Dashboard = () => {
               className="gap-2 hover:bg-destructive hover:text-destructive-foreground hover:border-destructive transition-all duration-300 shadow-sm"
             >
               <LogOut className="w-4 h-4" />
-              <span className="hidden sm:inline">Cerrar Sesión</span>
+              <span className="hidden sm:inline">Log Out</span>
             </Button>
           </div>
         </div>
@@ -85,13 +85,13 @@ const Dashboard = () => {
               value="orders" 
               className="text-base font-semibold data-[state=active]:bg-gradient-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-medium transition-all duration-300 rounded-lg"
             >
-              📦 Pedidos
+              📦 Orders
             </TabsTrigger>
             <TabsTrigger 
               value="reservations" 
               className="text-base font-semibold data-[state=active]:bg-gradient-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-medium transition-all duration-300 rounded-lg"
             >
-              🍽️ Reservas
+              🍽️ Reservations
             </TabsTrigger>
           </TabsList>
 

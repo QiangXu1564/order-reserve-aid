@@ -14,6 +14,7 @@ const Login = () => {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
 
@@ -36,6 +37,26 @@ const Login = () => {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validación de contraseña
+    if (password.length < 6) {
+      toast({
+        title: "Contraseña inválida",
+        description: "La contraseña debe tener al menos 6 caracteres",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast({
+        title: "Las contraseñas no coinciden",
+        description: "Por favor verifica que ambas contraseñas sean iguales",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -54,6 +75,8 @@ const Login = () => {
         description: "Has creado tu cuenta correctamente. Ya puedes iniciar sesión.",
       });
       setIsSignup(false);
+      setPassword("");
+      setConfirmPassword("");
     } catch (error: any) {
       toast({
         title: "Error",
@@ -168,6 +191,21 @@ const Login = () => {
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
+                    minLength={6}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Mínimo 6 caracteres
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="confirm-password">Confirmar Contraseña</Label>
+                  <Input
+                    id="confirm-password"
+                    type="password"
+                    placeholder="••••••••"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                     minLength={6}
                   />

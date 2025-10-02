@@ -85,7 +85,11 @@ const ReservationApprovals = () => {
   };
 
   const handleApproval = async (id: string, newStatus: 'approved' | 'rejected') => {
-    const { error } = await supabase
+    const approval = approvals.find(app => app.id === id);
+    if (!approval) return;
+
+    // Update approval status
+    const { error: updateError } = await supabase
       .from('reservation_approvals')
       .update({ 
         status: newStatus,
@@ -94,20 +98,46 @@ const ReservationApprovals = () => {
       })
       .eq('id', id);
 
-    if (error) {
+    if (updateError) {
       toast({
         title: "Error",
         description: "Could not update approval",
         variant: "destructive",
       });
-    } else {
-      toast({
-        title: "Approval updated",
-        description: `Reservation ${newStatus}`,
-      });
-      // Remove from list after update
-      setApprovals(prev => prev.filter(app => app.id !== id));
+      return;
     }
+
+    // If approved, create a reservation
+    if (newStatus === 'approved') {
+      const reservationDateTime = new Date(`${approval.reservation_date}T${approval.reservation_time}`);
+      
+      const { error: reservationError } = await supabase
+        .from('reservations')
+        .insert({
+          customer_name: approval.customer_name,
+          customer_phone: approval.customer_phone,
+          reservation_time: reservationDateTime.toISOString(),
+          number_of_people: approval.number_of_people,
+          status: 'confirmed'
+        });
+
+      if (reservationError) {
+        toast({
+          title: "Warning",
+          description: "Approval updated but failed to create reservation",
+          variant: "destructive",
+        });
+        return;
+      }
+    }
+
+    toast({
+      title: "Approval updated",
+      description: `Reservation ${newStatus}${newStatus === 'approved' ? ' and added to reservations' : ''}`,
+    });
+    
+    // Remove from list after update
+    setApprovals(prev => prev.filter(app => app.id !== id));
   };
 
   const formatDate = (date: string) => {

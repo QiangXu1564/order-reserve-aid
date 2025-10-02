@@ -66,3 +66,6 @@ verify_jwt = false
 
 [functions.check-approval-status]
 verify_jwt = false
+
+[functions.create-order]
+verify_jwt = false

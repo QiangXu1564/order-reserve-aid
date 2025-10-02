@@ -79,7 +79,7 @@ const OrdersList = () => {
         variant: "destructive",
       });
     } else if (data) {
-      setOrders(data);
+      setOrders(data as Order[]);
     }
   };
 

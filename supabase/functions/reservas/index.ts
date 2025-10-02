@@ -21,6 +21,7 @@ serve(async (req) => {
 
     const { customer_name, customer_phone, number_of_people, reservation_time } = body;
 
+    // Input validation and sanitization
     if (!customer_name || !customer_phone || !number_of_people || !reservation_time) {
       return new Response(
         JSON.stringify({ error: 'Missing required fields: customer_name, customer_phone, number_of_people, reservation_time' }),
@@ -28,13 +29,48 @@ serve(async (req) => {
       );
     }
 
+    // Validate data types and lengths
+    if (typeof customer_name !== 'string' || customer_name.trim().length === 0 || customer_name.length > 200) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid customer_name: must be a non-empty string with max 200 characters' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
+    }
+
+    if (typeof customer_phone !== 'string' || customer_phone.trim().length === 0 || customer_phone.length > 50) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid customer_phone: must be a non-empty string with max 50 characters' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
+    }
+
+    if (typeof number_of_people !== 'number' || number_of_people < 1 || number_of_people > 100) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid number_of_people: must be a number between 1 and 100' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
+    }
+
+    // Validate reservation_time is a valid ISO 8601 date
+    const reservationDate = new Date(reservation_time);
+    if (isNaN(reservationDate.getTime())) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid reservation_time: must be a valid ISO 8601 date' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
+    }
+
+    // Sanitize inputs
+    const sanitizedName = customer_name.trim().substring(0, 200);
+    const sanitizedPhone = customer_phone.trim().substring(0, 50);
+
     const { data, error } = await supabase
       .from('reservations')
       .insert({
-        customer_name,
-        customer_phone,
+        customer_name: sanitizedName,
+        customer_phone: sanitizedPhone,
         number_of_people,
-        reservation_time,
+        reservation_time: reservationDate.toISOString(),
         status: 'pending'
       })
       .select()

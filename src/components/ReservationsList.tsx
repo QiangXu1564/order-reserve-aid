@@ -80,7 +80,7 @@ const ReservationsList = () => {
         variant: "destructive",
       });
     } else if (data) {
-      setReservations(data);
+      setReservations(data as Reservation[]);
     }
   };
 

@@ -21,6 +21,7 @@ serve(async (req) => {
 
     const { customer_name, customer_phone, products } = body;
 
+    // Input validation and sanitization
     if (!customer_name || !customer_phone || !products) {
       return new Response(
         JSON.stringify({ error: 'Missing required fields: customer_name, customer_phone, products' }),
@@ -28,12 +29,41 @@ serve(async (req) => {
       );
     }
 
+    // Validate data types and lengths
+    if (typeof customer_name !== 'string' || customer_name.trim().length === 0 || customer_name.length > 200) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid customer_name: must be a non-empty string with max 200 characters' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
+    }
+
+    if (typeof customer_phone !== 'string' || customer_phone.trim().length === 0 || customer_phone.length > 50) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid customer_phone: must be a non-empty string with max 50 characters' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
+    }
+
+    if (!Array.isArray(products) && typeof products !== 'string') {
+      return new Response(
+        JSON.stringify({ error: 'Invalid products: must be an array or string' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
+    }
+
+    // Sanitize inputs
+    const sanitizedName = customer_name.trim().substring(0, 200);
+    const sanitizedPhone = customer_phone.trim().substring(0, 50);
+    const sanitizedProducts = typeof products === 'string' 
+      ? products.trim().substring(0, 2000)
+      : JSON.stringify(products).substring(0, 2000);
+
     const { data, error } = await supabase
       .from('orders')
       .insert({
-        customer_name,
-        customer_phone,
-        products: typeof products === 'string' ? products : JSON.stringify(products),
+        customer_name: sanitizedName,
+        customer_phone: sanitizedPhone,
+        products: sanitizedProducts,
         status: 'pending'
       })
       .select()

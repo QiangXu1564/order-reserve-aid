@@ -49,6 +49,7 @@ All colors MUST be HSL.
     --gradient-subtle: linear-gradient(180deg, hsl(35 20% 98%), hsl(35 15% 96%));
     --shadow-soft: 0 2px 8px hsl(20 15% 15% / 0.08);
     --shadow-medium: 0 4px 16px hsl(20 15% 15% / 0.12);
+    --shadow-glow: 0 8px 32px hsl(24 85% 55% / 0.15);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -92,6 +93,7 @@ All colors MUST be HSL.
     --gradient-subtle: linear-gradient(180deg, hsl(20 20% 10%), hsl(20 18% 13%));
     --shadow-soft: 0 2px 8px hsl(0 0% 0% / 0.3);
     --shadow-medium: 0 4px 16px hsl(0 0% 0% / 0.4);
+    --shadow-glow: 0 8px 32px hsl(24 85% 55% / 0.25);
   }
 }
 

@@ -124,7 +124,7 @@ const Login = () => {
               <ChefHat className="w-8 h-8 text-primary-foreground" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold">Restaurante Manager</CardTitle>
+          <CardTitle className="text-2xl font-bold">Restaurant ManagAIment</CardTitle>
           <CardDescription>
             Gestiona pedidos y reservas de tu restaurante
           </CardDescription>

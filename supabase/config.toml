@@ -57,3 +57,6 @@ verify_jwt = false
 
 [functions.reservas]
 verify_jwt = false
+
+[functions.check-reservation-availability]
+verify_jwt = false
